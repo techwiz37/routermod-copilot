@@ -58,7 +58,7 @@ export class InlineCompletionService {
     const model = this.resolveModel(config);
     if (!model) {
       this.deps.log(
-        'Inline completion skipped: no model available. Set 9router-for-github-copilot.inlineCompletionModel or refresh the model list.'
+        'Inline completion skipped: no model available. Set routermod-for-github-copilot.inlineCompletionModel or refresh the model list.'
       );
       return undefined;
     }

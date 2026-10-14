@@ -1,5 +1,5 @@
 /**
- * Interactive management commands for 9Router profiles.
+ * Interactive management commands for Routermod profiles.
  *
  * Provides flows for:
  * - Add Provider (name, serverUrl, apiKey, customHeaders)
@@ -19,7 +19,7 @@ interface ProviderQuickPickItem extends vscode.QuickPickItem {
 }
 
 /**
- * Main management flow, registered as `9router-for-github-copilot.manage`
+ * Main management flow, registered as `routermod-for-github-copilot.manage`
  * (called from VS Code's "Add Models..." dropdown or command palette).
  */
 export async function manageProvidersFlow(
@@ -106,7 +106,7 @@ export async function manageProvidersFlow(
     );
 
     const pick = await vscode.window.showQuickPick(items, {
-      title: '9Router — Manage Providers',
+      title: 'Routermod — Manage Providers',
       placeHolder: 'Select a provider to edit, or add a new one',
       ignoreFocusOut: true,
     });
@@ -120,11 +120,11 @@ export async function manageProvidersFlow(
     } else if (pick.action === 'refresh') {
       provider.refreshModels();
       await refreshStatusBar();
-      vscode.window.setStatusBarMessage('9Router: Refreshed all provider model catalogs.', 3000);
+      vscode.window.setStatusBarMessage('Routermod: Refreshed all provider model catalogs.', 3000);
     } else if (pick.action === 'openSettings') {
       await vscode.commands.executeCommand(
         'workbench.action.openSettings',
-        '9router-for-github-copilot'
+        'routermod-for-github-copilot'
       );
       return;
     } else if (pick.action === 'select' && pick.profile) {
@@ -150,7 +150,7 @@ export async function addProviderFlow(
   refreshStatusBar: () => Promise<void>
 ): Promise<Profile | undefined> {
   const name = await vscode.window.showInputBox({
-    title: '9Router — Provider Name',
+    title: 'Routermod — Provider Name',
     prompt: 'Enter a friendly display name for this provider (e.g. Local Ollama, Cloud vLLM)',
     placeHolder: DEFAULT_PROFILE_NAME,
     value: '',
@@ -162,7 +162,7 @@ export async function addProviderFlow(
   }
 
   const serverUrl = await vscode.window.showInputBox({
-    title: `9Router [${name.trim()}] — Server URL`,
+    title: `Routermod [${name.trim()}] — Server URL`,
     prompt: 'Enter the inference server URL (OpenAI-compatible endpoint)',
     value: DEFAULT_PROFILE_URL,
     placeHolder: DEFAULT_PROFILE_URL,
@@ -174,7 +174,7 @@ export async function addProviderFlow(
   }
 
   const apiKey = await vscode.window.showInputBox({
-    title: `9Router [${name.trim()}] — API Key`,
+    title: `Routermod [${name.trim()}] — API Key`,
     prompt: "Enter the API key / token — saved to VS Code's secret storage (leave empty for local servers)",
     password: true,
     placeHolder: 'Optional',
@@ -202,7 +202,7 @@ export async function addProviderFlow(
       { label: 'Add Custom Headers...', description: 'Add HTTP headers (e.g. Authorization, Anthropic-Version)' },
     ],
     {
-      title: `9Router — "${created.name}" created`,
+      title: `Routermod — "${created.name}" created`,
       placeHolder: 'Add custom headers now?',
       ignoreFocusOut: true,
     }
@@ -214,7 +214,7 @@ export async function addProviderFlow(
     await refreshStatusBar();
   }
 
-  vscode.window.showInformationMessage(`9Router: Provider "${created.name}" added successfully.`);
+  vscode.window.showInformationMessage(`Routermod: Provider "${created.name}" added successfully.`);
   return created;
 }
 
@@ -249,7 +249,7 @@ async function editProviderFlow(
   ];
 
   const pick = await vscode.window.showQuickPick(actions, {
-    title: `9Router — Provider: ${current.name}`,
+    title: `Routermod — Provider: ${current.name}`,
     placeHolder: 'Select an option to configure',
     ignoreFocusOut: true,
   });
@@ -261,7 +261,7 @@ async function editProviderFlow(
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: `9Router: Testing connection to "${current.name}"...`,
+        title: `Routermod: Testing connection to "${current.name}"...`,
         cancellable: true,
       },
       async (_progress, token) => {
@@ -270,20 +270,20 @@ async function editProviderFlow(
         try {
           const runtime = provider.getRuntime(current.id);
           if (!runtime) {
-            vscode.window.showErrorMessage(`9Router: Runtime for "${current.name}" not found.`);
+            vscode.window.showErrorMessage(`Routermod: Runtime for "${current.name}" not found.`);
             return;
           }
           runtime.catalog.invalidateCache();
           const outcome = await runtime.catalog.getOrFetchModels(cts.token);
           if (outcome.error) {
             const action = await vscode.window.showErrorMessage(
-              `9Router [${current.name}]: Connection failed. ${outcome.error}`,
+              `Routermod [${current.name}]: Connection failed. ${outcome.error}`,
               'Edit Server URL',
               'Edit API Key'
             );
             if (action === 'Edit Server URL') {
               const nextUrl = await vscode.window.showInputBox({
-                title: `9Router [${current.name}] — Server URL`,
+                title: `Routermod [${current.name}] — Server URL`,
                 value: current.serverUrl,
                 ignoreFocusOut: true,
                 validateInput: (v) => (URL.canParse(v) ? undefined : 'Please enter a valid URL'),
@@ -293,7 +293,7 @@ async function editProviderFlow(
               }
             } else if (action === 'Edit API Key') {
               const nextKey = await vscode.window.showInputBox({
-                title: `9Router [${current.name}] — API Key`,
+                title: `Routermod [${current.name}] — API Key`,
                 prompt: 'Enter API key',
                 password: true,
                 ignoreFocusOut: true,
@@ -304,7 +304,7 @@ async function editProviderFlow(
             }
           } else {
             vscode.window.showInformationMessage(
-              `9Router [${current.name}]: Successfully connected! Found ${outcome.models.length} model(s).`
+              `Routermod [${current.name}]: Successfully connected! Found ${outcome.models.length} model(s).`
             );
           }
         } finally {
@@ -316,10 +316,10 @@ async function editProviderFlow(
     provider.invalidateModelCache(current.id);
     provider.refreshModels();
     await refreshStatusBar();
-    vscode.window.setStatusBarMessage(`9Router [${current.name}]: Models refreshed.`, 3000);
+    vscode.window.setStatusBarMessage(`Routermod [${current.name}]: Models refreshed.`, 3000);
   } else if (pick.action === 'name') {
     const nextName = await vscode.window.showInputBox({
-      title: '9Router — Rename Provider',
+      title: 'Routermod — Rename Provider',
       value: current.name,
       ignoreFocusOut: true,
       validateInput: (v) => (v.trim().length === 0 ? 'Name cannot be empty' : undefined),
@@ -329,7 +329,7 @@ async function editProviderFlow(
     }
   } else if (pick.action === 'url') {
     const nextUrl = await vscode.window.showInputBox({
-      title: `9Router [${current.name}] — Server URL`,
+      title: `Routermod [${current.name}] — Server URL`,
       value: current.serverUrl,
       ignoreFocusOut: true,
       validateInput: (value) => URL.canParse(value) ? undefined : 'Please enter a valid URL',
@@ -339,7 +339,7 @@ async function editProviderFlow(
     }
   } else if (pick.action === 'key') {
     const nextKey = await vscode.window.showInputBox({
-      title: `9Router [${current.name}] — API Key`,
+      title: `Routermod [${current.name}] — API Key`,
       prompt: "Leave empty to clear stored API key",
       password: true,
       ignoreFocusOut: true,
@@ -353,7 +353,7 @@ async function editProviderFlow(
     await store.setProfileEnabled(current.id, !current.enabled);
   } else if (pick.action === 'delete') {
     if (store.getProfiles().length <= 1) {
-      vscode.window.showWarningMessage('9Router: Cannot delete the only remaining provider profile.');
+      vscode.window.showWarningMessage('Routermod: Cannot delete the only remaining provider profile.');
       return true;
     }
     const confirm = await vscode.window.showWarningMessage(
@@ -363,7 +363,7 @@ async function editProviderFlow(
     );
     if (confirm === 'Delete') {
       await store.deleteProfile(current.id);
-      vscode.window.showInformationMessage(`9Router: Provider "${current.name}" deleted.`);
+      vscode.window.showInformationMessage(`Routermod: Provider "${current.name}" deleted.`);
     }
   }
 

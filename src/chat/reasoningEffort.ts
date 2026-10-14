@@ -64,7 +64,7 @@ export interface ReasoningEffortSources {
  * {@link ReasoningEffort} union. The literal strings `"none"`, `"off"`, and
  * any other value outside the union are dropped — GitHub Copilot's
  * `/v1/chat/completions` returns 400 on `"none"` for models that don't
- * accept it, and 9Router itself strips it (decolua/9router PR #791).
+ * accept it, and Routermod itself strips it (decolua/routermod PR #791).
  */
 export function pickReasoningEffort(sources: ReasoningEffortSources): ReasoningEffort | undefined {
     const candidate =

@@ -1,16 +1,16 @@
 /**
  * Core types for multi-profile support.
  *
- * A Profile represents one inference backend (e.g. local Ollama, cloud 9Router,
+ * A Profile represents one inference backend (e.g. local Ollama, cloud Routermod,
  * remote vLLM). Each profile has its own endpoint, credentials, and custom
  * headers, while workspace-level settings (timeouts, tool calling flags, token
  * budgets) provide global defaults that apply across all profiles.
  */
 
 export interface Profile {
-  /** Stable identifier, e.g. 'default', 'ollama-local', 'cloud-9router'. URL-safe slug. */
+  /** Stable identifier, e.g. 'default', 'ollama-local', 'cloud-routermod'. URL-safe slug. */
   readonly id: string;
-  /** Human-readable display name, e.g. 'Local Ollama', '9Router Cloud'. */
+  /** Human-readable display name, e.g. 'Local Ollama', 'Routermod Cloud'. */
   readonly name: string;
   /** OpenAI-compatible base URL (e.g. 'http://localhost:20128/v1'). */
   readonly serverUrl: string;
@@ -36,10 +36,10 @@ export interface ProfileDraft {
 
 export const DEFAULT_PROFILE_ID = 'default';
 export const DEFAULT_PROFILE_NAME = 'Default';
-export const DEFAULT_PROFILE_URL = 'http://localhost:20128/v1';
+export const DEFAULT_PROFILE_URL = 'http://localhost:1337/v1';
 
 /** SecretStorage key under which the JSON array of profiles is persisted. */
-export const PROFILES_SECRET_KEY = '9router-for-github-copilot.profiles.v1';
+export const PROFILES_SECRET_KEY = 'routermod-for-github-copilot.profiles.v1';
 
 /**
  * Generate a URL-safe profile id from a display name.

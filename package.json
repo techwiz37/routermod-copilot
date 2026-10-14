@@ -1,15 +1,15 @@
 {
-  "name": "9router-for-github-copilot",
-  "displayName": "9Router for Github Copilot (OpenAI compatible)",
-  "description": "Connect GitHub Copilot to 9Router and any OpenAI-compatible server for open-source models",
+  "name": "routermod-copilot",
+  "displayName": "Routermod for GitHub Copilot (OpenAI compatible)",
+  "description": "Connect GitHub Copilot to Routermod and any OpenAI-compatible server for open-source models",
   "version": "2.0.1",
-  "publisher": "hotrungnhan",
+  "publisher": "techwiz37",
   "icon": "assets/icon.png",
-  "private": true,
+  "private": false,
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hotrungnhan/9router-for-github-copilot.git"
+    "url": "https://github.com/techwiz37/routermod-copilot.git"
   },
   "engines": {
     "vscode": "^1.125.0"
@@ -31,7 +31,7 @@
     "package": "vsce package --no-yarn",
     "deploy": "vsce publish --no-yarn",
     "deploy:pre-release": "vsce publish --pre-release --no-yarn",
-    "install:local": "code --install-extension ./9router-for-github-copilot-*.vsix --force"
+    "install:local": "code --install-extension ./routermod-for-github-copilot-*.vsix --force"
   },
   "categories": [
     "AI",
@@ -53,15 +53,15 @@
   "contributes": {
     "languageModelChatProviders": [
       {
-        "vendor": "9router-github-copilot",
-        "displayName": "9Router",
-        "managementCommand": "9router-for-github-copilot.manage",
+        "vendor": "routermod-github-copilot",
+        "displayName": "Routermod",
+        "managementCommand": "routermod-for-github-copilot.manage",
         "configuration": {
           "properties": {
             "serverUrl": {
               "type": "string",
               "title": "Server URL",
-              "default": "http://localhost:20128/v1",
+              "default": "http://localhost:1337/v1",
               "description": "Inference server URL (OpenAI API compatible endpoint). Saved to your default provider profile."
             },
             "apiKey": {
@@ -76,94 +76,94 @@
     ],
     "commands": [
       {
-        "command": "9router-for-github-copilot.manage",
+        "command": "routermod-for-github-copilot.manage",
         "title": "Manage Providers",
-        "category": "9Router"
+        "category": "Routermod"
       },
       {
-        "command": "9router-for-github-copilot.addProvider",
+        "command": "routermod-for-github-copilot.addProvider",
         "title": "Add Provider",
-        "category": "9Router"
+        "category": "Routermod"
       },
       {
-        "command": "9router-for-github-copilot.testConnection",
+        "command": "routermod-for-github-copilot.testConnection",
         "title": "Test Server Connection",
-        "category": "9Router"
+        "category": "Routermod"
       },
       {
-        "command": "9router-for-github-copilot.refreshModels",
+        "command": "routermod-for-github-copilot.refreshModels",
         "title": "Refresh Models",
-        "category": "9Router"
+        "category": "Routermod"
       },
       {
-        "command": "9router-for-github-copilot.editCustomHeaders",
+        "command": "routermod-for-github-copilot.editCustomHeaders",
         "title": "Edit Custom Headers",
-        "category": "9Router"
+        "category": "Routermod"
       },
       {
-        "command": "9router-for-github-copilot.selectInlineCompletionModel",
+        "command": "routermod-for-github-copilot.selectInlineCompletionModel",
         "title": "Select Inline Completion Model",
-        "category": "9Router"
+        "category": "Routermod"
       },
       {
-        "command": "9router-for-github-copilot.showOutput",
+        "command": "routermod-for-github-copilot.showOutput",
         "title": "Show Output Log",
-        "category": "9Router"
+        "category": "Routermod"
       }
     ],
     "configuration": {
-      "title": "9Router",
+      "title": "Routermod",
       "properties": {
-        "9router-for-github-copilot.serverUrl": {
+        "routermod-for-github-copilot.serverUrl": {
           "type": "string",
-          "default": "http://localhost:20128/v1",
+          "default": "http://localhost:1337/v1",
           "description": "Inference server URL (OpenAI API compatible endpoint)",
           "order": 1
         },
-        "9router-for-github-copilot.apiKey": {
+        "routermod-for-github-copilot.apiKey": {
           "type": "string",
           "default": "",
           "description": "Deprecated. Use the 'Manage Providers' command to store the API key in VS Code's secret storage. Any value entered here is migrated and cleared on extension activation.",
-          "deprecationMessage": "API keys are now stored in VS Code's secret storage. Use the '9Router: Manage Providers' command to set the API key.",
+          "deprecationMessage": "API keys are now stored in VS Code's secret storage. Use the 'Routermod: Manage Providers' command to set the API key.",
           "order": 2
         },
-        "9router-for-github-copilot.requestTimeout": {
+        "routermod-for-github-copilot.requestTimeout": {
           "type": "number",
           "default": 60000,
           "description": "Request timeout in milliseconds",
           "order": 3
         },
-        "9router-for-github-copilot.defaultMaxTokens": {
+        "routermod-for-github-copilot.defaultMaxTokens": {
           "type": "number",
           "default": 262144,
           "description": "Fallback context window size (input tokens) when the server does not report it",
           "order": 4
         },
-        "9router-for-github-copilot.defaultMaxOutputTokens": {
+        "routermod-for-github-copilot.defaultMaxOutputTokens": {
           "type": "number",
           "default": 4096,
           "description": "Fallback maximum output tokens when the server does not report context size",
           "order": 5
         },
-        "9router-for-github-copilot.enableImageInput": {
+        "routermod-for-github-copilot.enableImageInput": {
           "type": "boolean",
           "default": true,
           "description": "Enable image input capability for models that support multimodal requests",
           "order": 6
         },
-        "9router-for-github-copilot.enableToolCalling": {
+        "routermod-for-github-copilot.enableToolCalling": {
           "type": "boolean",
           "default": true,
           "description": "Enable tool calling capability for models",
           "order": 7
         },
-        "9router-for-github-copilot.parallelToolCalling": {
+        "routermod-for-github-copilot.parallelToolCalling": {
           "type": "boolean",
           "default": true,
           "description": "Allow model to call multiple tools in parallel (disable if model has issues with parallel calls)",
           "order": 8
         },
-        "9router-for-github-copilot.agentTemperature": {
+        "routermod-for-github-copilot.agentTemperature": {
           "type": "number",
           "default": 0,
           "minimum": 0,
@@ -171,30 +171,30 @@
           "description": "Fallback temperature for agent/tool calling mode (lower = more consistent tool call formatting). Set to 0.0 for best results with fine-tuned models. A temperature discovered from the backend's own model config (e.g. an Ollama Modelfile via /api/show) takes precedence; use perModelOptions to force a specific value.",
           "order": 9
         },
-        "9router-for-github-copilot.verboseLogging": {
+        "routermod-for-github-copilot.verboseLogging": {
           "type": "boolean",
           "default": false,
           "description": "When enabled, the full chat request body (including messages and tool args) is written to the output channel. Keep disabled unless you are reproducing an issue — captured logs may contain conversation content from the user's current editor.",
           "order": 10
         },
-        "9router-for-github-copilot.customHeaders": {
+        "routermod-for-github-copilot.customHeaders": {
           "type": "object",
           "default": {},
           "additionalProperties": {
             "type": "string"
           },
           "description": "Deprecated. Use the 'Edit Custom Headers' command to store headers in VS Code's secret storage. Any value entered here is migrated and cleared on extension activation.",
-          "deprecationMessage": "Custom headers (which may carry credentials such as 'Authorization') are now stored in VS Code's secret storage. Use the '9Router: Edit Custom Headers' command.",
+          "deprecationMessage": "Custom headers (which may carry credentials such as 'Authorization') are now stored in VS Code's secret storage. Use the 'Routermod: Edit Custom Headers' command.",
           "order": 11
         },
-        "9router-for-github-copilot.extraModelOptions": {
+        "routermod-for-github-copilot.extraModelOptions": {
           "type": "object",
           "default": {},
           "additionalProperties": true,
           "description": "Extra parameters merged into the chat-completions request body (e.g. top_k, repetition_penalty, seed). Per-request modelOptions from the caller take precedence. Edit in settings.json for non-string values.",
           "order": 12
         },
-        "9router-for-github-copilot.perModelOptions": {
+        "routermod-for-github-copilot.perModelOptions": {
           "type": "object",
           "default": {},
           "additionalProperties": {
@@ -204,7 +204,7 @@
           "description": "Per-model chat-completion parameters, keyed by model id. Merged on top of 'extraModelOptions' for matching models; per-request modelOptions from the caller still take precedence. Keys match the model id exactly, or use a '*' wildcard for a whole family (case-insensitive, e.g. 'qwen*'). Exact-id entries win over wildcard entries. Example: { \"qwen*\": { \"temperature\": 0.7, \"top_p\": 0.8 }, \"deepseek-r1\": { \"temperature\": 0.6 } }. Edit in settings.json.",
           "order": 13
         },
-        "9router-for-github-copilot.modelContextWindows": {
+        "routermod-for-github-copilot.modelContextWindows": {
           "type": "object",
           "default": {},
           "additionalProperties": {
@@ -213,53 +213,53 @@
           "markdownDescription": "Per-model context window override (total tokens), keyed by model id. Wins over what the server reports. Use when the server reports no context size — or the wrong one (e.g. llama-server router mode advertises nothing until a model is loaded). Keys match the model id exactly, or use a `*` wildcard (case-insensitive); exact-id entries win. Example: `{ \"qwen2.5-coder-32b\": 32768, \"llama*\": 123904 }`. Edit in settings.json.",
           "order": 21
         },
-        "9router-for-github-copilot.enableInlineCompletion": {
+        "routermod-for-github-copilot.enableInlineCompletion": {
           "type": "boolean",
           "default": false,
           "markdownDescription": "Experimental. Provide inline (ghost-text) code completions from your inference server, running **alongside** GitHub Copilot (not through it — VS Code does not expose bring-your-own-key models to its own inline suggestions). Requires a model/server that supports fill-in-the-middle via the `/v1/completions` `suffix` parameter (vLLM, llama.cpp, LM Studio, …). Leave disabled if you already use Copilot completions, to avoid two suggestions competing.",
           "order": 14
         },
-        "9router-for-github-copilot.inlineCompletionProvider": {
+        "routermod-for-github-copilot.inlineCompletionProvider": {
           "type": "string",
           "default": "",
           "description": "Provider profile ID to route inline completions to. Leave blank to use the first enabled provider profile.",
           "order": 15
         },
-        "9router-for-github-copilot.inlineCompletionModel": {
+        "routermod-for-github-copilot.inlineCompletionModel": {
           "type": "string",
           "default": "",
           "description": "Model id to use for inline completions. Leave blank to use the first model reported by the server. Tip: point this at a small fill-in-the-middle / base model (e.g. a *-base or code FIM model) rather than a chat model for faster, cleaner completions.",
           "order": 16
         },
-        "9router-for-github-copilot.inlineCompletionMaxTokens": {
+        "routermod-for-github-copilot.inlineCompletionMaxTokens": {
           "type": "number",
           "default": 256,
           "minimum": 1,
           "description": "Maximum tokens generated per inline completion. Lower values are faster and cheaper.",
           "order": 17
         },
-        "9router-for-github-copilot.inlineCompletionDebounce": {
+        "routermod-for-github-copilot.inlineCompletionDebounce": {
           "type": "number",
           "default": 300,
           "minimum": 0,
           "description": "Milliseconds to wait after the last keystroke before requesting an inline completion. Higher values reduce load on the inference server while typing.",
           "order": 18
         },
-        "9router-for-github-copilot.inlineCompletionTimeout": {
+        "routermod-for-github-copilot.inlineCompletionTimeout": {
           "type": "number",
           "default": 3000,
           "minimum": 1,
           "description": "Per-request timeout (milliseconds) for inline completions. Kept short so a slow server doesn't block ghost-text suggestions.",
           "order": 19
         },
-        "9router-for-github-copilot.inlineCompletionMaxPrefixChars": {
+        "routermod-for-github-copilot.inlineCompletionMaxPrefixChars": {
           "type": "number",
           "default": 4000,
           "minimum": 1,
           "description": "Maximum characters of context before the cursor to send for inline completions. Lower values reduce latency but provide less context.",
           "order": 20
         },
-        "9router-for-github-copilot.inlineCompletionMaxSuffixChars": {
+        "routermod-for-github-copilot.inlineCompletionMaxSuffixChars": {
           "type": "number",
           "default": 1000,
           "minimum": 1,

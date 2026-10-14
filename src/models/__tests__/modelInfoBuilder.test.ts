@@ -30,7 +30,7 @@ describe('buildModelInfo first-party look-and-feel fields', () => {
       capabilities: {},
     });
     assert.equal(info.detail, PROVIDER_DETAIL_LABEL);
-    assert.equal(info.detail, '9Router');
+    assert.equal(info.detail, 'Routermod');
   });
 
   test('sets multiplierNumeric to 0 so BYOK models do not appear premium', () => {
@@ -78,14 +78,14 @@ describe('buildModelInfo id-derived fields', () => {
     assert.equal(info.family, 'mistral');
   });
 
-  test('falls back to the 9router family for unknown ids', () => {
+  test('falls back to the routermod family for unknown ids', () => {
     const { info } = buildModelInfo({
       model: baseModel({ id: 'unknown-org/unknown-model' }),
       defaultMaxTokens: 8192,
       defaultMaxOutputTokens: 2048,
       capabilities: {},
     });
-    assert.equal(info.family, '9router');
+    assert.equal(info.family, 'routermod');
   });
 });
 

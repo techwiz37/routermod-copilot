@@ -19,14 +19,14 @@ describe('formatExposedModelId', () => {
       'ollama-local/deepseek-r1:14b'
     );
     assert.equal(
-      formatExposedModelId('cloud-9router', 'gpt-4o', true),
-      'cloud-9router/gpt-4o'
+      formatExposedModelId('cloud-routermod', 'gpt-4o', true),
+      'cloud-routermod/gpt-4o'
     );
   });
 });
 
 describe('parseModelTarget', () => {
-  const knownProfiles = ['default', 'ollama-local', 'cloud-9router'];
+  const knownProfiles = ['default', 'ollama-local', 'cloud-routermod'];
 
   test('parses namespaced model ID matching a known profile', () => {
     const result = parseModelTarget('ollama-local/qwen2.5-coder', knownProfiles, 'default');
@@ -37,9 +37,9 @@ describe('parseModelTarget', () => {
   });
 
   test('handles model IDs containing additional slashes', () => {
-    const result = parseModelTarget('cloud-9router/meta-llama/Llama-3-70b', knownProfiles, 'default');
+    const result = parseModelTarget('cloud-routermod/meta-llama/Llama-3-70b', knownProfiles, 'default');
     assert.deepEqual(result, {
-      profileId: 'cloud-9router',
+      profileId: 'cloud-routermod',
       rawModelId: 'meta-llama/Llama-3-70b',
     });
   });

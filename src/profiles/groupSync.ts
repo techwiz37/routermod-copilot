@@ -1,5 +1,5 @@
 /**
- * Synchronize 9Router profile groups with VS Code's `chatLanguageModels.json`.
+ * Synchronize Routermod profile groups with VS Code's `chatLanguageModels.json`.
  *
  * Why this is needed:
  * VS Code's "Manage Language Models" editor only creates separate table sections
@@ -12,7 +12,7 @@ import * as os from 'os';
 import * as path from 'path';
 import { Profile } from './profileTypes';
 
-export const VENDOR_ID = '9router-github-copilot';
+export const VENDOR_ID = 'routermod-github-copilot';
 
 /**
  * Locate VS Code user directory containing `chatLanguageModels.json`.

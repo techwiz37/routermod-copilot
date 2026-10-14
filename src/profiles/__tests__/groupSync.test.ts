@@ -9,7 +9,7 @@ import {
 
 describe('groupSync', () => {
   it('identifies vendor id correctly', () => {
-    assert.strictEqual(VENDOR_ID, '9router-github-copilot');
+    assert.strictEqual(VENDOR_ID, 'routermod-github-copilot');
   });
 
   it('locates user config path', () => {

@@ -528,7 +528,7 @@ export class ChatRequestHandler {
       `I was unable to generate a response. ${errorHint}\n\n` +
       `Diagnostic info:\n- Model: ${model.id}\n- Tools provided: ${toolCount}\n` +
       `- Estimated input tokens: ${inputTokenCount}\n- Context limit: ${modelMaxContext}\n\n` +
-      `Check the "9Router" output panel for detailed logs.`;
+      `Check the "Routermod" output panel for detailed logs.`;
 
     progress.report(new vscode.LanguageModelTextPart(errorMessage));
   }

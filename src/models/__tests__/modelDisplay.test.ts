@@ -63,8 +63,8 @@ describe('inferModelFamily', () => {
     assert.equal(inferModelFamily('deepseek-ai/DeepSeek-V3'), 'deepseek');
   });
 
-  test('falls back to 9router for unknown models', () => {
-    assert.equal(inferModelFamily('unknown-vendor/UnknownModel'), '9router');
+  test('falls back to routermod for unknown models', () => {
+    assert.equal(inferModelFamily('unknown-vendor/UnknownModel'), 'routermod');
   });
 });
 

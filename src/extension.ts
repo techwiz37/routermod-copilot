@@ -17,7 +17,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   await provider.loadSecrets();
 
   context.subscriptions.push(
-    vscode.lm.registerLanguageModelChatProvider('9router-github-copilot', provider),
+    vscode.lm.registerLanguageModelChatProvider('routermod-github-copilot', provider),
 
     // Experimental standalone inline (ghost-text) completions backed by the
     // inference server's /v1/completions endpoint. Registered unconditionally
@@ -40,12 +40,12 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.StatusBarAlignment.Right,
     100
   );
-  statusBar.name = '9Router';
+  statusBar.name = 'Routermod';
   // Click refreshes the gateway. The rich GHCP-style popup is the hover
   // tooltip — it's the closest stable-API approximation to a floating
   // status-bar popup. Clicking is wired to a useful action so the bar
   // isn't dead.
-  statusBar.command = '9router-for-github-copilot.refreshModels';
+  statusBar.command = 'routermod-for-github-copilot.refreshModels';
   statusBar.show();
   context.subscriptions.push(statusBar);
 

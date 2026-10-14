@@ -1,5 +1,5 @@
 /**
- * Pure renderer for the 9Router status bar.
+ * Pure renderer for the Routermod status bar.
  *
  * The status bar is context-aware: it shows a different summary depending on
  * whether the gateway is idle, actively streaming a response, has just
@@ -105,14 +105,14 @@ function renderProbing(
   // at activation.
   return {
     text: `${ICON_DISCONNECTED} ${stripPort(state.host) || 'gateway'}`,
-    tooltip: '**9Router**\n\nChecking connection…',
+    tooltip: '**Routermod**\n\nChecking connection…',
   };
 }
 
 function renderIdle(state: Extract<StatusBarState, { kind: 'idle' }>): StatusBarRender {
   const text = `${ICON_CONNECTED} ${stripPort(state.host)}`;
   const tooltip = [
-    '**9Router**',
+    '**Routermod**',
     '',
     `Server: \`${state.host}\``,
     `Models: ${state.modelCount} available`,
@@ -131,7 +131,7 @@ function renderStreaming(
   // the tooltip instead.
   const text = `${ICON_CONNECTED} ${stripPort(state.host)}`;
   const tooltip = [
-    '**9Router**',
+    '**Routermod**',
     '',
     state.activeCount > 1
       ? `Streaming ${state.activeCount} concurrent responses`
@@ -146,7 +146,7 @@ function renderResponded(
 ): StatusBarRender {
   const text = `${ICON_CONNECTED} ${stripPort(state.host)}`;
   const tooltipLines = [
-    '**9Router**',
+    '**Routermod**',
     '',
     `Last request: \`${state.modelId}\``,
     `Server: \`${state.host}\``,
@@ -165,7 +165,7 @@ function renderResponded(
 function renderError(state: Extract<StatusBarState, { kind: 'error' }>): StatusBarRender {
   const text = `${ICON_DISCONNECTED} ${stripPort(state.host)}`;
   const tooltip = [
-    '**9Router — Connection failed**',
+    '**Routermod — Connection failed**',
     '',
     `Server: \`${state.host}\``,
     '',
@@ -184,7 +184,7 @@ function renderNoModels(
   // in the tooltip and the dialog.
   const text = `${ICON_CONNECTED} ${stripPort(state.host)}`;
   const tooltip = [
-    '**9Router**',
+    '**Routermod**',
     '',
     `Server: \`${state.host}\``,
     'Connected, but no models were reported.',

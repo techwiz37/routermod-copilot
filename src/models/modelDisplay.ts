@@ -17,8 +17,8 @@ import { serverReportedContext } from '../chat/contextWindow';
  * IDs without a slash are prettified in-place: `gpt-4o-mini` →
  * `Gpt 4o Mini`.
  */
-export function friendlyModelName(id: string): string {
-  return parseModelId(id).displayName;
+export function friendlyModelName(id: string, rawName?: string): string {
+  return parseModelId(id, rawName).displayName;
 }
 
 /** Parsed components of a model ID. */
@@ -36,7 +36,7 @@ export interface ParsedModelId {
  * display name. Converts dash-separated tokens to Title Case and
  * appends the provider in parentheses when present.
  */
-export function parseModelId(id: string): ParsedModelId {
+export function parseModelId(id: string, rawName?: string): ParsedModelId {
   const slash = id.lastIndexOf('/');
   let provider: string | undefined;
   let modelPart: string;
@@ -48,12 +48,12 @@ export function parseModelId(id: string): ParsedModelId {
     modelPart = id;
   }
 
-  const prettyModel = modelPart
+  const prettyModel = rawName || modelPart
     .split('-')
     .map(seg => seg.charAt(0).toUpperCase() + seg.slice(1))
     .join(' ');
 
-  const displayName = provider
+  const displayName = provider && !prettyModel.includes(`(${provider})`)
     ? `${prettyModel} (${provider})`
     : prettyModel;
 
@@ -75,14 +75,14 @@ const FAMILY_KEYWORDS: Array<{ match: RegExp; family: string }> = [
 
 /**
  * Infer a VS Code `family` value from the model ID. Falls back to
- * `'9router'` so the picker still groups all gateway models together when
+ * `'routermod'` so the picker still groups all gateway models together when
  * the family can't be determined.
  */
 export function inferModelFamily(id: string): string {
   for (const { match, family } of FAMILY_KEYWORDS) {
     if (match.test(id)) { return family; }
   }
-  return '9router';
+  return 'routermod';
 }
 
 /**

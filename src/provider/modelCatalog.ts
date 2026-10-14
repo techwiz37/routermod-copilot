@@ -209,7 +209,7 @@ export class ModelCatalog {
           defaultMaxTokens: config.defaultMaxTokens,
           defaultMaxOutputTokens: config.defaultMaxOutputTokens,
           capabilities: {
-            // Priority: discovered > 9Router capabilities > user setting.
+            // Priority: discovered > Routermod capabilities > user setting.
             // `undefined` means the backend didn't say (e.g. older Ollama),
             // so keep the setting.
             imageInput:
@@ -241,7 +241,7 @@ export class ModelCatalog {
           );
         } else {
           log(
-            `  Model ${model.id}: no server-reported context; using defaultMaxTokens=${totalContext}. If this is wrong, set '9router-for-github-copilot.modelContextWindows'.`
+            `  Model ${model.id}: no server-reported context; using defaultMaxTokens=${totalContext}. If this is wrong, set 'routermod-for-github-copilot.modelContextWindows'.`
           );
         }
         if (discovered) {
@@ -325,7 +325,7 @@ export class ModelCatalog {
     this.learnedContextByModelId.set(model.id, serverContext);
     this.deps.log(
       `Learned context size for ${model.id} from server error: ${serverContext} tokens (was budgeting for ${current}). ` +
-        `Add it to '9router-for-github-copilot.modelContextWindows' to persist across sessions.`
+        `Add it to 'routermod-for-github-copilot.modelContextWindows' to persist across sessions.`
     );
     return true;
   }

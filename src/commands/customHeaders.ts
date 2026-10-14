@@ -23,7 +23,7 @@ export async function editProfileCustomHeadersFlow(
     const items = buildHeaderQuickPickItems(headerNames);
 
     const pick = await vscode.window.showQuickPick(items, {
-      title: `9Router [${currentProfile.name}] — Custom Headers (${headerNames.length})`,
+      title: `Routermod [${currentProfile.name}] — Custom Headers (${headerNames.length})`,
       placeHolder:
         headerNames.length === 0
           ? 'No custom headers yet. Add one or close.'
@@ -94,7 +94,7 @@ async function addHeader(
   current: Record<string, string>
 ): Promise<void> {
   const name = await vscode.window.showInputBox({
-    title: `9Router [${profile.name}] — New header name`,
+    title: `Routermod [${profile.name}] — New header name`,
     prompt: 'e.g. Authorization, Anthropic-Version, HTTP-Referer',
     ignoreFocusOut: true,
     validateInput: (value) => {
@@ -111,7 +111,7 @@ async function addHeader(
     return;
   }
   const value = await vscode.window.showInputBox({
-    title: `9Router [${profile.name}] — Value for ${name}`,
+    title: `Routermod [${profile.name}] — Value for ${name}`,
     prompt: "Saved to VS Code's secret storage",
     password: true,
     ignoreFocusOut: true,
@@ -137,7 +137,7 @@ async function editOrDeleteHeader(
       { label: 'Remove header', description: 'Delete this header entirely' },
     ],
     {
-      title: `9Router [${profile.name}] — ${name}`,
+      title: `Routermod [${profile.name}] — ${name}`,
       placeHolder: 'Choose an action',
       ignoreFocusOut: true,
     }
@@ -152,7 +152,7 @@ async function editOrDeleteHeader(
     await profileStore.setCustomHeaders(profile.id, next);
   } else if (action.label === 'Edit value') {
     const value = await vscode.window.showInputBox({
-      title: `9Router [${profile.name}] — New value for ${name}`,
+      title: `Routermod [${profile.name}] — New value for ${name}`,
       prompt: "Saved to VS Code's secret storage",
       password: true,
       ignoreFocusOut: true,

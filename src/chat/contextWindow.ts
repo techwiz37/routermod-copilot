@@ -33,7 +33,7 @@ export function serverReportedContext(model: OpenAIModel): number | undefined {
     model.max_model_len,           // vLLM, LiteLLM
     model.context_length,          // Ollama, LocalAI, LM Studio
     model.context_window,          // llama.cpp (older builds)
-    model.capabilities?.contextWindow, // 9Router
+    model.capabilities?.contextWindow, // Routermod
     model.meta?.n_ctx,             // llama.cpp serving context
     model.meta?.n_ctx_train,       // llama.cpp training context
   ];

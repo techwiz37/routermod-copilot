@@ -1,7 +1,7 @@
 /**
  * Token accounting utilities.
  *
- * Token estimates are rough — the 9Router uses a char/4 approximation
+ * Token estimates are rough — the Routermod uses a char/4 approximation
  * rather than a real tokenizer. That's fine for budget math (we mostly care
  * about detecting context overflow), but any single count may be off by ~25%.
  */

@@ -9,7 +9,7 @@ import { renderStatusTooltipHtml } from './statusTooltip';
 const RESPONDED_DISPLAY_MS = 10_000;
 
 /**
- * Drives the 9Router status bar. Pure rendering lives in
+ * Drives the Routermod status bar. Pure rendering lives in
  * `statusBarRenderer.ts`; this class only handles the VS Code-side state
  * machine: timers, in-flight counting, mapping events onto state transitions.
  */

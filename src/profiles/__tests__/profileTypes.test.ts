@@ -11,7 +11,7 @@ import {
 describe('slugifyProfileName', () => {
   test('converts friendly names to clean URL-safe slugs', () => {
     assert.equal(slugifyProfileName('Local Ollama'), 'local-ollama');
-    assert.equal(slugifyProfileName('9Router Cloud (US-East)'), '9router-cloud-us-east');
+    assert.equal(slugifyProfileName('Routermod Cloud (US-East)'), 'routermod-cloud-us-east');
     assert.equal(slugifyProfileName('  My_Custom Server!  '), 'my-custom-server');
   });
 

@@ -1,5 +1,5 @@
 /**
- * Renders the 9Router status popup as the GHCP-style hover card. Lives in
+ * Renders the Routermod status popup as the GHCP-style hover card. Lives in
  * the status-bar `MarkdownString` tooltip — the closest stable-API analogue
  * to GHCP's floating popup (which uses the proposed `chatStatusItem` API
  * marketplace extensions can't enable).
@@ -42,15 +42,15 @@ import {
 
 /** Commands referenced by the popup's footer action links. */
 export const TOOLTIP_COMMANDS = {
-  Refresh: '9router-for-github-copilot.refreshModels',
-  Configure: '9router-for-github-copilot.manage',
-  Output: '9router-for-github-copilot.showOutput',
-  TestConnection: '9router-for-github-copilot.testConnection',
-  EditHeaders: '9router-for-github-copilot.editCustomHeaders',
+  Refresh: 'routermod-for-github-copilot.refreshModels',
+  Configure: 'routermod-for-github-copilot.manage',
+  Output: 'routermod-for-github-copilot.showOutput',
+  TestConnection: 'routermod-for-github-copilot.testConnection',
+  EditHeaders: 'routermod-for-github-copilot.editCustomHeaders',
   OpenSettings: 'workbench.action.openSettings',
 } as const;
 
-const SETTINGS_QUERY = '9router-for-github-copilot';
+const SETTINGS_QUERY = 'routermod-for-github-copilot';
 /** Cap models listed in the popup; remainder collapses to "and N more". */
 const TOOLTIP_MODEL_LIST_MAX = 8;
 /**
@@ -156,7 +156,7 @@ function renderHeader(snapshot: StatusSnapshot): string {
   const host = snapshot.host || 'not configured';
   return [
     '<table width="100%"><tr>',
-    `<td><strong>9Router</strong>&nbsp;${mutedSpan(esc(host))}</td>`,
+    `<td><strong>Routermod</strong>&nbsp;${mutedSpan(esc(host))}</td>`,
     `<td align="right"><a href="command:${TOOLTIP_COMMANDS.Refresh}" title="Refresh model list">$(refresh) Refresh</a></td>`,
     '</tr></table>',
   ].join('');

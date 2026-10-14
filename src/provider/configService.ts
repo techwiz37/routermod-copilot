@@ -40,7 +40,7 @@ export class ConfigService {
   }
 
   private readRawConfig(profile: Profile, apiKeyOverride?: string): GatewayConfig {
-    const config = vscode.workspace.getConfiguration('9router-for-github-copilot');
+    const config = vscode.workspace.getConfiguration('routermod-for-github-copilot');
     return {
       serverUrl: profile.serverUrl || FALLBACK_SERVER_URL,
       apiKey: apiKeyOverride ?? profile.apiKey ?? '',
@@ -102,7 +102,7 @@ export class ConfigService {
           if (this.lastInvalidUrlNotified !== issue.url) {
             this.lastInvalidUrlNotified = issue.url;
             this.deps.promptOpenSettings(
-              `9Router: Invalid server URL '${issue.url}'. Please check your settings.`
+              `Routermod: Invalid server URL '${issue.url}'. Please check your settings.`
             );
           }
           break;
@@ -120,7 +120,7 @@ export class ConfigService {
               total: issue.total,
             };
             this.deps.promptOpenSettings(
-              `9Router: defaultMaxOutputTokens (${issue.output}) was adjusted to ${issue.adjusted} ` +
+              `Routermod: defaultMaxOutputTokens (${issue.output}) was adjusted to ${issue.adjusted} ` +
                 `because it exceeds defaultMaxTokens (${issue.total}).`
             );
           }

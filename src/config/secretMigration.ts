@@ -11,8 +11,8 @@
 
 /** Keys used in SecretStorage. Mirrors the legacy setting names so logs read clearly. */
 export const SECRET_KEYS = {
-  apiKey: '9router-for-github-copilot.apiKey',
-  customHeaders: '9router-for-github-copilot.customHeaders',
+  apiKey: 'routermod-for-github-copilot.apiKey',
+  customHeaders: 'routermod-for-github-copilot.customHeaders',
 } as const;
 
 /** Subset of `vscode.WorkspaceConfiguration` we use during migration. */

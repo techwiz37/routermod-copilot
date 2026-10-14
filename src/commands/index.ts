@@ -17,19 +17,19 @@ export function registerCommands(
 
   context.subscriptions.push(
     // Tooltip's "Show output log" link
-    vscode.commands.registerCommand('9router-for-github-copilot.showOutput', () =>
+    vscode.commands.registerCommand('routermod-for-github-copilot.showOutput', () =>
       provider.showOutput()
     ),
 
     // "Manage Providers" command — triggered by the
     // "Add Models..." dropdown via the managementCommand contribution,
     // or from the command palette.
-    vscode.commands.registerCommand('9router-for-github-copilot.manage', () =>
+    vscode.commands.registerCommand('routermod-for-github-copilot.manage', () =>
       manageProvidersFlow(provider, refreshStatusBar)
     ),
 
     // Direct command to add a new provider profile
-    vscode.commands.registerCommand('9router-for-github-copilot.addProvider', () =>
+    vscode.commands.registerCommand('routermod-for-github-copilot.addProvider', () =>
       addProviderFlow(store, provider, refreshStatusBar)
     ),
 
@@ -37,9 +37,9 @@ export function registerCommands(
     // If >1 profiles, ask which provider to test (or All).
     // If 1 profile, test immediately.
     vscode.commands.registerCommand(
-      '9router-for-github-copilot.testConnection',
+      'routermod-for-github-copilot.testConnection',
       async () => {
-        const selection = await pickProvider(store, '9Router: Test Connection', true);
+        const selection = await pickProvider(store, 'Routermod: Test Connection', true);
         if (!selection) {
           return;
         }
@@ -54,11 +54,11 @@ export function registerCommands(
             if (models.length > 0) {
               statusManager.setIdle(models.map((m) => m.id));
               vscode.window.showInformationMessage(
-                `9Router: All providers connected! Found ${models.length} model(s).`
+                `Routermod: All providers connected! Found ${models.length} model(s).`
               );
             } else {
               statusManager.setNoModels();
-              vscode.window.showWarningMessage('9Router: Connected, but no models found.');
+              vscode.window.showWarningMessage('Routermod: Connected, but no models found.');
             }
           } else {
             // Test single profile
@@ -70,11 +70,11 @@ export function registerCommands(
             const profileModels = models.filter((m) => m.detail === selection.name);
             if (profileModels.length > 0) {
               vscode.window.showInformationMessage(
-                `9Router [${selection.name}]: Connected! Found ${profileModels.length} model(s): ${profileModels.map((m) => m.name).join(', ')}`
+                `Routermod [${selection.name}]: Connected! Found ${profileModels.length} model(s): ${profileModels.map((m) => m.name).join(', ')}`
               );
             } else {
               vscode.window.showWarningMessage(
-                `9Router [${selection.name}]: Connected, but no models reported.`
+                `Routermod [${selection.name}]: Connected, but no models reported.`
               );
             }
           }
@@ -82,7 +82,7 @@ export function registerCommands(
         } catch (error) {
           const msg = error instanceof Error ? error.message : String(error);
           statusManager.setError(msg);
-          vscode.window.showErrorMessage(`9Router: Connection test failed. ${msg}`);
+          vscode.window.showErrorMessage(`Routermod: Connection test failed. ${msg}`);
         } finally {
           cts.dispose();
         }
@@ -93,9 +93,9 @@ export function registerCommands(
     // If >1 profiles, ask which provider to refresh (or All).
     // If 1 profile, refresh immediately.
     vscode.commands.registerCommand(
-      '9router-for-github-copilot.refreshModels',
+      'routermod-for-github-copilot.refreshModels',
       async () => {
-        const selection = await pickProvider(store, '9Router: Refresh Models', true);
+        const selection = await pickProvider(store, 'Routermod: Refresh Models', true);
         if (!selection) {
           return;
         }
@@ -105,7 +105,7 @@ export function registerCommands(
         provider.refreshModels();
         await refreshStatusBar();
         const targetLabel = selection === 'ALL' ? 'all providers' : selection.name;
-        vscode.window.setStatusBarMessage(`9Router: Refreshed models for ${targetLabel}.`, 3000);
+        vscode.window.setStatusBarMessage(`Routermod: Refreshed models for ${targetLabel}.`, 3000);
       }
     ),
 
@@ -113,9 +113,9 @@ export function registerCommands(
     // If >1 profiles, prompt to pick which provider.
     // If 1 profile, open editor directly.
     vscode.commands.registerCommand(
-      '9router-for-github-copilot.editCustomHeaders',
+      'routermod-for-github-copilot.editCustomHeaders',
       async () => {
-        const target = await pickProvider(store, '9Router: Edit Custom Headers', false);
+        const target = await pickProvider(store, 'Routermod: Edit Custom Headers', false);
         if (!target || target === 'ALL') {
           return;
         }
@@ -129,7 +129,7 @@ export function registerCommands(
 
     // Select Inline Completion Model from fetched models
     vscode.commands.registerCommand(
-      '9router-for-github-copilot.selectInlineCompletionModel',
+      'routermod-for-github-copilot.selectInlineCompletionModel',
       async () => {
         const cts = new vscode.CancellationTokenSource();
         let models: vscode.LanguageModelChatInformation[];
@@ -144,7 +144,7 @@ export function registerCommands(
 
         if (models.length === 0) {
           vscode.window.showWarningMessage(
-            '9Router: No models available to select for inline completions.'
+            'Routermod: No models available to select for inline completions.'
           );
           return;
         }
@@ -164,7 +164,7 @@ export function registerCommands(
         ];
 
         const selected = await vscode.window.showQuickPick(items, {
-          title: '9Router: Select Inline Completion Model',
+          title: 'Routermod: Select Inline Completion Model',
           placeHolder: 'Choose a model for ghost-text code completions',
         });
 
@@ -172,7 +172,7 @@ export function registerCommands(
           return;
         }
 
-        const config = vscode.workspace.getConfiguration('9router-for-github-copilot');
+        const config = vscode.workspace.getConfiguration('routermod-for-github-copilot');
         await config.update(
           'inlineCompletionModel',
           selected.modelId,
@@ -181,7 +181,7 @@ export function registerCommands(
 
         const targetDesc = selected.modelId || 'Default (first available)';
         vscode.window.showInformationMessage(
-          `9Router: Inline completion model set to: ${targetDesc}`
+          `Routermod: Inline completion model set to: ${targetDesc}`
         );
         await refreshStatusBar();
       }

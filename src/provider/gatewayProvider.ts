@@ -34,12 +34,12 @@ import { countMessageTokens } from './vscodeParts';
 export type { RequestStateEvent } from './chatRequestHandler';
 
 const MODEL_AFFECTING_KEYS: readonly string[] = [
-  '9router-for-github-copilot.requestTimeout',
-  '9router-for-github-copilot.defaultMaxTokens',
-  '9router-for-github-copilot.defaultMaxOutputTokens',
-  '9router-for-github-copilot.enableImageInput',
-  '9router-for-github-copilot.enableToolCalling',
-  '9router-for-github-copilot.modelContextWindows',
+  'routermod-for-github-copilot.requestTimeout',
+  'routermod-for-github-copilot.defaultMaxTokens',
+  'routermod-for-github-copilot.defaultMaxOutputTokens',
+  'routermod-for-github-copilot.enableImageInput',
+  'routermod-for-github-copilot.enableToolCalling',
+  'routermod-for-github-copilot.modelContextWindows',
 ];
 
 export class GatewayProvider
@@ -70,7 +70,7 @@ export class GatewayProvider
   };
 
   constructor(context: vscode.ExtensionContext) {
-    this.outputChannel = vscode.window.createOutputChannel('9Router');
+    this.outputChannel = vscode.window.createOutputChannel('Routermod');
     const log = (msg: string): void => this.outputChannel.appendLine(msg);
 
     this.profileStore = new ProfileStore(context.secrets, {
@@ -89,7 +89,7 @@ export class GatewayProvider
       this._onDidChangeRequestState,
       this._onDidChangeStatusSnapshot,
       vscode.workspace.onDidChangeConfiguration((e: vscode.ConfigurationChangeEvent) => {
-        if (!e.affectsConfiguration('9router-for-github-copilot')) {
+        if (!e.affectsConfiguration('routermod-for-github-copilot')) {
           return;
         }
         this.outputChannel.appendLine('Workspace configuration changed, reloading profiles...');
@@ -231,7 +231,7 @@ export class GatewayProvider
     if (!options.silent && errors.length > 0) {
       for (const { profile, error } of errors) {
         promptOpenSettings(
-          `9Router [${profile.name}]: Failed to fetch models. ${diagnoseModelFetchError(error)}`,
+          `Routermod [${profile.name}]: Failed to fetch models. ${diagnoseModelFetchError(error)}`,
           (msg) => this.outputChannel.appendLine(msg)
         );
       }
@@ -276,7 +276,7 @@ export class GatewayProvider
 
     const runtime = this.runtimes.get(target.profileId);
     if (!runtime) {
-      throw new Error(`9Router: Profile '${target.profileId}' not found or disabled.`);
+      throw new Error(`Routermod: Profile '${target.profileId}' not found or disabled.`);
     }
 
     const rawModel: vscode.LanguageModelChatInformation = {

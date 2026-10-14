@@ -49,7 +49,7 @@
         "esbenp.prettier-vscode",
         "dbaeumer.vscode-eslint",
         "ms-vscode.vscode-typescript-next",
-        "hotrungnhan.9router-for-github-copilot"
+        "hotrungnhan.routermod-for-github-copilot"
       ]
     }
   },

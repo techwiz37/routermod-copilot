@@ -16,7 +16,7 @@ import { TOKEN_CONSTANTS } from '../chat/tokenBudget';
  * shape native Copilot Chat BYOK providers use (e.g. `detail: 'Anthropic'`),
  * which is what visually groups all of our models under the provider.
  */
-export const PROVIDER_DETAIL_LABEL = '9Router';
+export const PROVIDER_DETAIL_LABEL = 'Routermod';
 
 /**
  * Cost-tier multiplier surfaced to Copilot Chat. Set to 0 so BYOK / self-hosted
@@ -26,7 +26,7 @@ export const PROVIDER_MULTIPLIER_NUMERIC = 0;
 
 /**
  * Reasoning-effort levels offered in the Copilot Chat picker for the
- * different thinking formats. Mirrors what 9Router (and the upstream
+ * different thinking formats. Mirrors what Routermod (and the upstream
  * OpenAI/Anthropic APIs it routes to) accept on `reasoning_effort`. Kept
  * as `readonly` tuples so the property is `as const`-friendly.
  */
@@ -114,7 +114,7 @@ export function buildModelInfo({
   const serverContext = serverReportedContext(model);
   const totalContext =
     contextOverride ?? discoveredContext ?? serverContext ?? defaultMaxTokens;
-  // 9Router `capabilities.maxOutput` is an authoritative ceiling (issue #199).
+  // Routermod `capabilities.maxOutput` is an authoritative ceiling (issue #199).
   const modelMaxOutput = model.capabilities?.maxOutput;
   const computedMaxOutput = Math.min(
     defaultMaxOutputTokens,
@@ -128,8 +128,8 @@ export function buildModelInfo({
     : computedMaxOutput;
 
   const description = describeModel(model);
-  const { provider } = parseModelId(model.id);
-  const friendlyName = friendlyModelName(model.id);
+  const { provider } = parseModelId(model.id, model.name);
+  const friendlyName = friendlyModelName(model.id, model.name);
 
   const tooltipParts: string[] = [];
   if (provider) {
@@ -250,7 +250,7 @@ function pickEffortsForFormat(
     case 'deepseek':
       return DEEPSEEK_EFFORTS;
     case 'zai':
-      // Only GLM-5.2+ reads `reasoning_effort` (9Router capabilities.js
+      // Only GLM-5.2+ reads `reasoning_effort` (Routermod capabilities.js
       // gate it on `thinkingEffortSupported`); older zai-format models
       // ignore the field.
       return effortSupported ? ZAI_EFFORTS : undefined;

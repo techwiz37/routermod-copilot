@@ -4,7 +4,7 @@
  *
  * Keeps legacy settings working transparently on upgrade:
  * 1. Read existing SecretStorage keys (SECRET_KEYS.apiKey, SECRET_KEYS.customHeaders).
- * 2. Read existing workspace setting (`9router-for-github-copilot.serverUrl`).
+ * 2. Read existing workspace setting (`routermod-for-github-copilot.serverUrl`).
  * 3. If any values exist and no profile blob exists yet, initialize the 'default'
  *    profile with these values.
  * 4. Also runs the older plain-text settings -> legacy secret keys migration

@@ -194,7 +194,7 @@ export class ProfileStore {
   }
 
   private legacyConfigAccessor(): LegacyConfigAccessor {
-    const config = vscode.workspace.getConfiguration('9router-for-github-copilot');
+    const config = vscode.workspace.getConfiguration('routermod-for-github-copilot');
     return {
       get: <T>(section: string, defaultValue: T): T => config.get<T>(section, defaultValue),
       inspect: <T>(section: string) => {
