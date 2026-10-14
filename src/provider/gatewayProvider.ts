@@ -27,7 +27,7 @@ import { ConfigService } from './configService';
 import { ProfileStore } from '../profiles/profileStore';
 import { Profile, DEFAULT_PROFILE_ID } from '../profiles/profileTypes';
 import { ProfileRuntime } from './profileRuntime';
-import { formatExposedModelId, parseModelTarget } from '../profiles/modelNamespace';
+import { formatExposedModelId, dedupeById, parseModelTarget } from '../profiles/modelNamespace';
 import { promptOpenSettings } from './notifications';
 import { countMessageTokens } from './vscodeParts';
 
@@ -237,7 +237,16 @@ export class GatewayProvider
       }
     }
 
-    return allModels;
+    // VS Code renders one picker row per entry keyed by `id`, so a duplicate
+    // id (e.g. two enabled profiles pointed at the same server) would show the
+    // same model twice. Collapse before handing the list over.
+    const deduped = dedupeById(allModels);
+    if (deduped.length !== allModels.length) {
+      this.outputChannel.appendLine(
+        `Collapsed ${allModels.length - deduped.length} duplicate model entry(ies) before exposing them to VS Code.`
+      );
+    }
+    return deduped;
   }
 
   private applyFrameworkConfiguration(
@@ -392,8 +401,7 @@ export class GatewayProvider
       }
     }
 
-    let overallState: ConnectionState = 'unknown';
-    if (hasAnyError && !hasAnySuccess) {
+    let overallState: ConnectionState = 'unknown';    if (hasAnyError && !hasAnySuccess) {
       overallState = 'error';
     } else if (hasAnySuccess && allEmpty) {
       overallState = 'noModels';
@@ -418,7 +426,7 @@ export class GatewayProvider
       },
       ...(anyLastSuccessAt !== undefined ? { lastSuccessfulFetchAt: anyLastSuccessAt } : {}),
       profiles: profileSummaries,
-      models: allModels,
+      models: dedupeById(allModels),
       sessionStats: this.sessionStats,
       ...(this.lastRequest ? { lastRequest: this.lastRequest } : {}),
       features: {

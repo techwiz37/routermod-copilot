@@ -67,3 +67,33 @@ export function parseModelTarget(
     rawModelId: trimmed,
   };
 }
+
+/**
+ * Drop duplicate entries from a model list, keeping the first occurrence.
+ *
+ * Why this exists: VS Code renders one row per returned entry, keyed by the
+ * exposed `id`. Duplicates leak in when (a) two enabled profiles point at the
+ * same server and the same raw model appears under each namespace, or (b) a
+ * backend lists the same id twice. Either way the picker shows the same model
+ * more than once, which reads as a bug to users.
+ *
+ * `keyOf` defaults to the `id` field but is injectable so the status dialog
+ * (which exposes a different shape) can reuse the same logic. Order is
+ * preserved so the server's listing order wins.
+ */
+export function dedupeById<T>(
+  items: readonly T[],
+  keyOf: (item: T) => string = (item) => (item as { id?: string }).id ?? ''
+): T[] {
+  const seen = new Set<string>();
+  const result: T[] = [];
+  for (const item of items) {
+    const key = keyOf(item);
+    if (key.length === 0 || seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    result.push(item);
+  }
+  return result;
+}

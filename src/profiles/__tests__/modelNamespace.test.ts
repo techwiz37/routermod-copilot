@@ -2,6 +2,7 @@ import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   formatExposedModelId,
+  dedupeById,
   parseModelTarget,
 } from '../modelNamespace';
 
@@ -66,5 +67,57 @@ describe('parseModelTarget', () => {
       profileId: 'custom-profile',
       rawModelId: 'some-model',
     });
+  });
+});
+
+describe('dedupeById', () => {
+  test('keeps the first occurrence and preserves order', () => {
+    const models = [
+      { id: 'a', name: 'First A' },
+      { id: 'b', name: 'B' },
+      { id: 'a', name: 'Second A' },
+    ];
+    assert.deepEqual(dedupeById(models), [
+      { id: 'a', name: 'First A' },
+      { id: 'b', name: 'B' },
+    ]);
+  });
+
+  test('returns the input untouched when all ids are unique', () => {
+    const models = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
+    assert.deepEqual(dedupeById(models), models);
+  });
+
+  test('collapses the same raw model exposed under two profiles', () => {
+    const models = [
+      { id: 'local/claude-opus-4-5' },
+      { id: 'cloud/claude-opus-4-5' },
+      { id: 'local/claude-opus-4-5' },
+    ];
+    assert.deepEqual(dedupeById(models), [
+      { id: 'local/claude-opus-4-5' },
+      { id: 'cloud/claude-opus-4-5' },
+    ]);
+  });
+
+  test('drops entries with an empty/missing id', () => {
+    const models = [{ id: '' }, { id: 'a' }, {}];
+    assert.deepEqual(dedupeById(models), [{ id: 'a' }]);
+  });
+
+  test('accepts a custom key selector for other shapes', () => {
+    const entries = [
+      { exposedId: 'x', label: 'X' },
+      { exposedId: 'x', label: 'X again' },
+      { exposedId: 'y', label: 'Y' },
+    ];
+    assert.deepEqual(dedupeById(entries, (e) => e.exposedId), [
+      { exposedId: 'x', label: 'X' },
+      { exposedId: 'y', label: 'Y' },
+    ]);
+  });
+
+  test('handles an empty list', () => {
+    assert.deepEqual(dedupeById([]), []);
   });
 });
