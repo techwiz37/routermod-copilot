@@ -18,7 +18,17 @@ function baseModel(overrides: Partial<OpenAIModel> = {}): OpenAIModel {
 }
 
 describe('serverReportedContext', () => {
-  test('prefers max_model_len over every other field', () => {
+  test('prefers capabilities.contextWindow over flat context fields', () => {
+    const model = baseModel({
+      capabilities: { contextWindow: 1048576 },
+      max_model_len: 131072,
+      context_length: 16384,
+      context_window: 4096,
+    });
+    assert.equal(serverReportedContext(model), 1048576);
+  });
+
+  test('prefers max_model_len over flat fallback fields when capabilities.contextWindow is absent', () => {
     const model = baseModel({
       max_model_len: 131072,
       context_length: 8192,
